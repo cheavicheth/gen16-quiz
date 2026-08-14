@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>សំណួរត្រៀម Cybersecurity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0b1020; --bg2:#121a33; --card:#161f3d; --card2:#1d2950;
+  --line:#2a3763; --txt:#e8ecf8; --dim:#96a3c8;
+  --acc:#3ddc97; --acc2:#38bdf8; --warn:#fbbf24; --bad:#f4626c;
+  --r:14px;
+}
+body{
+  background:radial-gradient(1200px 600px at 50% -10%,#1a2550 0%,var(--bg) 60%);
+  background-attachment:fixed; color:var(--txt); min-height:100vh;
+  font-family:'Noto Sans Khmer','Khmer OS Battambang','Khmer OS','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  line-height:1.75; padding:16px 14px 60px;
+}
+.wrap{max-width:760px;margin:0 auto}
+.en{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55}
+
+/* header */
+header{text-align:center;padding:22px 0 20px}
+header h1{font-size:1.45rem;font-weight:700;letter-spacing:-.01em}
+header h1 span{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--dim);font-size:.88rem;margin-top:6px}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.menu{display:grid;gap:12px}
+.tile{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--r);
+  padding:18px 20px;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:16px;text-align:start;width:100%;color:inherit;font:inherit}
+.tile:hover{border-color:var(--acc);transform:translateY(-2px)}
+.tile .ic{font-size:1.7rem;flex:0 0 auto}
+.tile b{display:block;font-size:1.05rem;font-weight:700}
+.tile small{color:var(--dim);font-size:.82rem}
+
+/* buttons */
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.btn{background:var(--acc);color:#06281c;font-weight:700;padding:11px 20px;border-radius:10px;transition:.15s;font-size:.95rem}
+.btn:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt);font-weight:500}
+.btn.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spread{justify-content:space-between}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:.85rem;background:var(--bg2);transition:.15s}
+.chip:hover{border-color:var(--acc2)}
+.chip.on{background:var(--acc);color:#06281c;border-color:var(--acc);font-weight:700}
+
+/* progress */
+.bar{height:6px;background:var(--bg2);border-radius:99px;overflow:hidden;margin:10px 0 4px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .3s;border-radius:99px}
+.meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--dim)}
+
+/* question */
+.qnum{color:var(--acc2);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.qtext{font-size:1.06rem;font-weight:600;margin:8px 0 16px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:start;padding:13px 15px;margin-bottom:9px;
+  background:var(--bg2);border:1.5px solid var(--line);border-radius:11px;transition:.15s;font-size:.95rem}
+.opt:hover:not(.locked){border-color:var(--acc2);background:var(--card2)}
+.opt .k{flex:0 0 26px;height:26px;border-radius:7px;background:var(--card2);display:grid;place-items:center;
+  font-size:.8rem;font-weight:700;color:var(--dim);font-family:'Inter',sans-serif}
+.opt.sel{border-color:var(--acc2)}.opt.sel .k{background:var(--acc2);color:#04202e}
+.opt.ok{border-color:var(--acc);background:rgba(61,220,151,.1)}.opt.ok .k{background:var(--acc);color:#06281c}
+.opt.no{border-color:var(--bad);background:rgba(244,98,108,.1)}.opt.no .k{background:var(--bad);color:#2b0508}
+.opt.locked{cursor:default}
+.expl{border-inline-start:3px solid var(--acc);background:rgba(61,220,151,.07);padding:12px 15px;border-radius:0 10px 10px 0;margin-top:14px;font-size:.92rem}
+.expl b{color:var(--acc);display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.verdict{font-weight:700;margin-top:14px;font-size:.95rem}
+.verdict.ok{color:var(--acc)}.verdict.no{color:var(--bad)}
+
+/* timer */
+.timer{font-family:'Inter',monospace;font-weight:700;font-size:.95rem;color:var(--warn)}
+
+/* results */
+.score{text-align:center;padding:26px 10px}
+.score .big{font-size:3.4rem;font-weight:800;font-family:'Inter',sans-serif;line-height:1;
+  background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score .sub{color:var(--dim);margin-top:8px}
+.grade{display:inline-block;margin-top:14px;padding:6px 18px;border-radius:999px;font-weight:700;font-size:.9rem}
+
+/* flashcards */
+.fc{border:1px solid var(--line);border-radius:var(--r);margin-bottom:11px;overflow:hidden;background:var(--card)}
+.fc>button{width:100%;text-align:start;padding:16px 18px;font-weight:600;display:flex;gap:12px;align-items:center;font-size:.98rem}
+.fc>button .n{flex:0 0 28px;height:28px;border-radius:8px;background:var(--card2);color:var(--acc2);
+  display:grid;place-items:center;font-size:.82rem;font-weight:700;font-family:'Inter',sans-serif}
+.fc>button .ar{margin-inline-start:auto;color:var(--dim);transition:.2s;flex:0 0 auto}
+.fc.open>button .ar{transform:rotate(90deg)}
+.fcbody{display:none;padding:4px 18px 20px;border-top:1px solid var(--line);font-size:.93rem}
+.fc.open .fcbody{display:block}
+.fcbody ul{padding-inline-start:20px;margin:8px 0}
+.fcbody li{margin-bottom:7px}
+.fcbody p{margin:9px 0}
+.fcbody strong{color:var(--acc)}
+.fcbody table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
+.fcbody th,.fcbody td{border:1px solid var(--line);padding:7px 9px;text-align:start}
+.fcbody th{background:var(--card2);color:var(--acc2);font-weight:700}
+.tblwrap{overflow-x:auto}
+
+.hide{display:none!important}
+footer{text-align:center;color:var(--dim);font-size:.78rem;padding:30px 0 10px;line-height:2}
+.review-item{border:1px solid var(--line);border-radius:11px;padding:14px;margin-bottom:10px;background:var(--bg2)}
+.review-item .r1{font-size:.93rem;font-weight:600;margin-bottom:8px}
+.review-item .r2{font-size:.86rem;color:var(--bad)}
+.review-item .r3{font-size:.86rem;color:var(--acc)}
+.review-item .r4{font-size:.85rem;color:var(--dim);margin-top:7px}
+@media(max-width:480px){body{padding:10px 10px 50px}.card{padding:15px}header h1{font-size:1.2rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>សំណួរត្រៀម <span>Cybersecurity</span></h1>
+    <p>១១៧ សំណួរជម្រើស + ៩ សំណួរខ្លី</p>
+  </header>
+
+  <!-- HOME -->
+  <div id="home">
+    <div class="menu">
+      <button class="tile" onclick="startStudySetup()">
+        <span class="ic">📖</span>
+        <span><b>របៀបរៀន — Study</b><small>ឆ្លើយ ហើយឃើញចម្លើយត្រឹមត្រូវ និងការពន្យល់ភ្លាមៗ</small></span>
+      </button>
+      <button class="tile" onclick="startExamSetup()">
+        <span class="ic">⏱️</span>
+        <span><b>របៀបប្រឡង — Exam</b><small>មានពេលកំណត់ សំណួរច្របល់ ដឹងពិន្ទុនៅចុងបញ្ចប់</small></span>
+      </button>
+      <button class="tile" onclick="show('flash')">
+        <span class="ic">🗂️</span>
+        <span><b>សំណួរខ្លី — Short Answer</b><small>៩ សំណួរសរសេរឆ្លើយ ព្រមទាំងចម្លើយគំរូ</small></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SETUP -->
+  <div id="setup" class="hide">
+    <div class="card">
+      <div id="setupTitle" style="font-weight:700;font-size:1.1rem;margin-bottom:4px"></div>
+      <div style="color:var(--dim);font-size:.86rem;margin-bottom:14px">ជ្រើសរើសមេរៀន</div>
+      <div class="chips" id="catChips"></div>
+      <div id="countBox" class="hide" style="margin-top:18px">
+        <div style="color:var(--dim);font-size:.86rem;margin-bottom:4px">ចំនួនសំណួរ</div>
+        <div class="chips" id="countChips"></div>
+      </div>
+      <div class="row" style="margin-top:22px">
+        <button class="btn" onclick="beginQuiz()">ចាប់ផ្តើម</button>
+        <button class="btn ghost" onclick="show('home')">ថយក្រោយ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="hide">
+    <div class="card">
+      <div class="row spread">
+        <span class="qnum" id="qCounter"></span>
+        <span class="timer" id="timer"></span>
+      </div>
+      <div class="bar"><i id="progBar" style="width:0%"></i></div>
+      <div class="qtext en" id="qText"></div>
+      <div id="opts"></div>
+      <div id="feedback"></div>
+      <div class="row spread" style="margin-top:20px">
+        <button class="btn ghost" id="btnPrev" onclick="nav(-1)">← ថយក្រោយ</button>
+        <button class="btn" id="btnNext" onclick="nav(1)">បន្ទាប់ →</button>
+      </div>
+    </div>
+    <div class="row" style="justify-content:center">
+      <button class="btn ghost" onclick="quitQuiz()">បញ្ឈប់ និងត្រឡប់ទៅដើម</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="hide">
+    <div class="card score">
+      <div class="big" id="scorePct"></div>
+      <div class="sub" id="scoreText"></div>
+      <div class="grade" id="scoreGrade"></div>
+      <div class="sub" id="scoreTime" style="font-size:.84rem"></div>
+    </div>
+    <div class="row" style="justify-content:center;margin-bottom:16px">
+      <button class="btn" onclick="retry()">ធ្វើម្តងទៀត</button>
+      <button class="btn ghost" onclick="show('home')">ទៅទំព័រដើម</button>
+    </div>
+    <div id="reviewBox"></div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div id="flash" class="hide">
+    <div id="fcList"></div>
+    <div class="row" style="justify-content:center;margin-top:8px">
+      <button class="btn ghost" onclick="show('home')">← ទៅទំព័រដើម</button>
+    </div>
+  </div>
+
+  <footer>
+    បង្កើតឡើងសម្រាប់និស្សិត — សូមចែករំលែកដល់មិត្តភក្តិ<br>
+    <span style="opacity:.6">ចម្លើយជាការណែនាំសិក្សា សូមផ្ទៀងផ្ទាត់ជាមួយគ្រូបង្រៀន</span>
+  </footer>
+</div>
+
+<script>
+const MC = [{"n":1,"q":"If you wanted a lightweight protocol to send real time data over, which of these would you use?","opts":["TCP","HTTP","ICMP","UDP"],"a":3,"e":"UDP គឺជា protocol ស្រាល គ្មាន connection និងគ្មាន retransmission ដូច្នេះសាកសមសម្រាប់ទិន្នន័យ real-time។"},{"n":2,"q":"What order, from bottom to top, does the TCP/IP architecture use?","opts":["Network Access, Network, Transport, Application","Link, Internet, Transport, Application","Physical, Network, Session, Application","Data Link, Internet, Transport, Application"],"a":1,"e":"ស្ថាបត្យកម្ម TCP/IP មាន ៤ ស្រទាប់ ពីក្រោមឡើងលើ៖ Link → Internet → Transport → Application។"},{"n":3,"q":"Which of these services would be considered a storage as a service solution?","opts":["Microsoft Azure","iCloud","Google Compute","DropLeaf"],"a":1,"e":"iCloud ជាសេវា storage as a service។ Azure និង Google Compute ជា IaaS/compute។"},{"n":4,"q":"The UDP headers contain which of the following fields?","opts":["Source address, destination address, checksum, length","Destination port, source port, checksum, length","Flags, source port, destination port, checksum","Length, checksum, flags, address"],"a":1,"e":"UDP header មាន ៤ វាល៖ source port, destination port, length, checksum។ Address ស្ថិតនៅក្នុង IP header។"},{"n":5,"q":"What are the three steps in the TCP handshake as described by the flags set?","opts":["SYN, SYN/URG, RST","RST, SYN, ACK","SYN, SYN/ACK, ACK","SYN, SYN/ACK, ACK/URG"],"a":2,"e":"TCP three-way handshake គឺ SYN → SYN/ACK → ACK។"},{"n":6,"q":"Which of these protocols would be used to communicate with an IoT device?","opts":["ICMP","SMTP","Telnet","HTTP"],"a":3,"e":"ឧបករណ៍ IoT ភាគច្រើនទំនាក់ទំនងតាម HTTP/REST API។"},{"n":7,"q":"Which network topology are you most likely to run across in a large enterprise network?","opts":["Ring topology","Bus topology","Full mesh","Star bus hybrid"],"a":3,"e":"បណ្ដាញសហគ្រាសធំៗ ភាគច្រើនប្រើ star-bus hybrid (switch ជា star, ភ្ជាប់គ្នាជា backbone)។"},{"n":8,"q":"If you were to see the subnet mask 255.255.252.0, what CIDR notation (prefix) would you use to indicate the same thing?","opts":["/23","/22","/21","/20"],"a":1,"e":"255.255.252.0 = 8+8+6+0 = 22 bits ដូច្នេះជា /22។"},{"n":9,"q":"Which of these addresses would be considered a private address (RFC 1918 address)?","opts":["172.128.10.5","9.10.10.7","172.20.128.240","250.28.17.10"],"a":2,"e":"RFC 1918 កំណត់ 10.0.0.0/8, 172.16.0.0/12 (172.16–172.31) និង 192.168.0.0/16។ 172.20.x.x ស្ថិតក្នុងជួរនេះ។"},{"n":10,"q":"If you were looking for the definitive documentation on a protocol, what would you consult?","opts":["Request for comments","Manual pages","Standards","IEEE"],"a":0,"e":"ឯកសារផ្លូវការរបស់ protocol នៅលើ Internet គឺ RFC (Request for Comments)។"},{"n":11,"q":"Which protocol is necessary to enable the functionality of traceroute?","opts":["HTTP","SNMP","ICMP","IP"],"a":2,"e":"traceroute ពឹងលើសារ ICMP Time Exceeded ដើម្បីរកឃើញ hop នីមួយៗ។"},{"n":12,"q":"What is a MAC address used for?","opts":["Addressing systems over a VPN","Addressing systems through a tunnel","Addressing systems over TCP","Addressing systems on the local network"],"a":3,"e":"MAC address ជា address ស្រទាប់ទី២ ប្រើសម្រាប់អាសយដ្ឋានក្នុងបណ្ដាញ local តែប៉ុណ្ណោះ។"},{"n":13,"q":"How would you calculate risk?","opts":["Probability * loss value","Probability * mitigation factor","(Loss value + mitigation factor) * (loss value/probability)","Probability * mitigation factor"],"a":0,"e":"Risk = Probability × Loss value (លទ្ធភាពកើតឡើង គុណនឹងតម្លៃខូចខាត)។"},{"n":14,"q":"Which of the following is one factor of a defense in depth approach to network design?","opts":["Switches","Using Linux on the desktop","Optical cable connections","Access control lists on routers"],"a":3,"e":"Defense in depth ត្រូវការ control ច្រើនស្រទាប់ — ACL នៅលើ router ជាស្រទាប់ការពារមួយ។"},{"n":15,"q":"How would you ensure that confidentiality is implemented in an organization?","opts":["Watchdog processes","Encryption","Cryptographic hashes","Web servers"],"a":1,"e":"Confidentiality ត្រូវបានធានាដោយ Encryption។"},{"n":16,"q":"What would you use a security information event manager for?","opts":["Aggregating and providing search for log data","Managing security projects","Escalating security events","Storing open source intelligence"],"a":0,"e":"SIEM ប្រមូលផ្ដុំ (aggregate) log ពីប្រភពច្រើន និងអនុញ្ញាតឱ្យស្វែងរក/វិភាគ។"},{"n":17,"q":"Why is it important to store system logs remotely?","opts":["Local systems can't handle it.","Bandwidth is faster than disks.","Attackers might delete local logs.","It will defend against attacks."],"a":2,"e":"បើ log ទុកតែក្នុងម៉ាស៊ីន អ្នកវាយប្រហារអាចលុបវាបាន។ ការផ្ញើទៅ server ឆ្ងាយរក្សាភស្តុតាង។"},{"n":18,"q":"What would be necessary for a TCP conversation to be considered established by a stateful firewall?","opts":["Final acknowledgment message","Three way handshake complete","Sequence numbers aligned","SYN message received"],"a":1,"e":"Stateful firewall ចាត់ទុក session ថា established នៅពេល three-way handshake បញ្ចប់។"},{"n":19,"q":"What is the purpose of a security policy?","opts":["To provide high level guidance on the role of security","To provide specific direction to security workers","To increase the bottom line of a company","To align standards and practices"],"a":0,"e":"Security policy ផ្ដល់ការណែនាំកម្រិតខ្ពស់ (high-level) អំពីតួនាទីសន្តិសុខ។ ឯកសារ procedure ទើបផ្ដល់លម្អិត។"},{"n":20,"q":"What important event can be exposed by enabling auditing?","opts":["System shutdown","Service startup","Package installation","User login"],"a":3,"e":"Auditing បើកឡើងដើម្បីកត់ត្រាព្រឹត្តិការណ៍សំខាន់ដូចជា user login (ជោគជ័យ/បរាជ័យ)។"},{"n":21,"q":"What can an intrusion prevention system do that an intrusion detection system can't?","opts":["Generate alerts","Block or reject network traffic","Complete the three way handshake to bogus messages","Log packets"],"a":1,"e":"IPS អាច block ឬ reject traffic។ IDS គ្រាន់តែរកឃើញ និងផ្ញើ alert។"},{"n":22,"q":"Which of these is an example of an application layer gateway?","opts":["Web application firewall","Runtime application self protection","Java applet","Intrusion prevention system"],"a":0,"e":"Web Application Firewall ដំណើរការនៅស្រទាប់ application ដូច្នេះជា application layer gateway។"},{"n":23,"q":"Which of the following products might be used as an intrusion detection system?","opts":["Elastic Stack","Prewikka","Snort","Snorby"],"a":2,"e":"Snort ជា IDS។ Elastic Stack, Prewikka, Snorby គ្រាន់តែជា interface/log platform។"},{"n":24,"q":"Which of these isn't an example of an attack that compromises integrity?","opts":["Buffer overflow","Man in the middle","Heap spraying","Watering hole"],"a":3,"e":"Watering hole ជាវិធីបញ្ជូន malware មិនមែនការកែប្រែទិន្នន័យ។ Buffer overflow, MitM, heap spraying ប៉ះពាល់ integrity។"},{"n":25,"q":"What type of attack could lead to a direct compromise of availability?","opts":["Watering hole","DoS","Phishing","Buffer overflow"],"a":1,"e":"DoS (Denial of Service) វាយប្រហារដោយផ្ទាល់លើ Availability។"},{"n":26,"q":"What important function can EDR offer to security operations staff?","opts":["Host isolation","Malware detection","Remote data collection","All of the above"],"a":3,"e":"EDR ផ្ដល់ទាំង host isolation, malware detection និង remote data collection។"},{"n":27,"q":"Which type of security control is a firewall?","opts":["Administrative","Physical","Technical","Corrective"],"a":2,"e":"Firewall ជា technical (logical) control។"},{"n":28,"q":"What information could you get from running p0f?","opts":["Local time","Remote time","Absolute time","Uptime"],"a":3,"e":"p0f ជា passive fingerprinting អាចទាញព័ត៌មានដូចជា uptime របស់ម៉ាស៊ីនគោលដៅ។"},{"n":29,"q":"What strategy does a local, caching DNS server use to look up records when asked?","opts":["Recursive","Serial","Combinatorics","Bistromathics"],"a":0,"e":"Caching DNS server ប្រើ recursive query ដើម្បីស្វែងរកចម្លើយជំនួសអតិថិជន។"},{"n":30,"q":"What would you use a job listing for when performing reconnaissance?","opts":["Executive staff","Technologies used","Phishing targets","Financial records"],"a":1,"e":"ការប្រកាសជ្រើសរើសបុគ្គលិកបង្ហាញពីបច្ចេកវិទ្យា (technologies) ដែលក្រុមហ៊ុនប្រើ។"},{"n":31,"q":"What tool could be used to gather email addresses from Bing, Google, and other sources?","opts":["whois","dig","netstat","theHarvester"],"a":3,"e":"theHarvester ប្រមូល email, subdomain, ឈ្មោះ ពី Google, Bing និងប្រភពផ្សេងៗ។"},{"n":32,"q":"What social networking site would be most likely to be useful in gathering information about a company, including job titles?","opts":["Twitter","LinkedIn","Foursquare","Facebook"],"a":1,"e":"LinkedIn ផ្ដល់ព័ត៌មានបុគ្គលិក និងតំណែងការងារច្រើនជាងគេ។"},{"n":33,"q":"You see the following text written down—port:502. What does that likely reference?","opts":["Shodan search","I/O search","p0f results","RIR query"],"a":0,"e":"'port:502' ជា syntax ស្វែងរករបស់ Shodan (502 = Modbus)។"},{"n":34,"q":"What would you use Wappalyzer for?","opts":["Analyzing web headers","Analyzing application code","Identifying web headers","Identifying web technologies"],"a":3,"e":"Wappalyzer កំណត់អត្តសញ្ញាណបច្ចេកវិទ្យា (CMS, framework, server) ដែលគេហទំព័រប្រើ។"},{"n":35,"q":"What information would you not expect to find in the response to a whois query about an IP address?","opts":["IP address block","Domain association","Address block owner","Technical contact"],"a":1,"e":"whois លើ IP ផ្ដល់ block, ម្ចាស់, technical contact — មិនផ្ដល់ការភ្ជាប់ទៅ domain ទេ។"},{"n":36,"q":"What would you be looking for with the filetype:txt Administrator:500: Google query?","opts":["Text files owned by the administrator","Administrator login from file","Text files including the text Administrator:500:","500 administrator files with text"],"a":2,"e":"filetype:txt + string ស្វែងរកឯកសារ .txt ដែលមានអត្ថបទ Administrator:500: (Google dorking)។"},{"n":37,"q":"What command would you use to get the list of mail servers for a domain?","opts":["whois mx zone= domain.com","netstat zone= domain.com mx","dig domain.com @mx","dig mx domain.com"],"a":3,"e":"dig mx domain.com ទាញ MX record (mail server) របស់ domain។"},{"n":38,"q":"What would you use the tool Sherlock for?","opts":["Searching for fingerprints","Looking up job information","Looking for potential usernames","Searching domain registrars"],"a":2,"e":"Sherlock ស្វែងរក username មួយនៅលើបណ្ដាញសង្គមរាប់រយ។"},{"n":39,"q":"Why does an ACK scan not indicate clearly that ports are open?","opts":["The scanner has to guess.","ACK is not a supported flag.","The target system ignores the message.","ACK scans cause a lot of retransmits."],"a":0,"e":"ACK scan ទទួល RST ត្រឡប់ពីទាំង port បើក និងបិទ ដូច្នេះ scanner ត្រូវទាយ។ វាបង្ហាញតែ filtered/unfiltered។"},{"n":40,"q":"What is one reason for using a scan like an ACK scan?","opts":["It may get through firewalls and IDS devices.","It is better supported.","The code in nmap is more robust.","An ACK scan is needed for scripting support."],"a":0,"e":"ACK scan អាចឆ្លងកាត់ firewall និង IDS មួយចំនួនព្រោះមើលទៅដូច traffic ដែលមានស្រាប់។"},{"n":41,"q":"What does nmap look at for fingerprinting an operating system?","opts":["The operating system headers","The application version","The response from connecting to port 0","The IP ID field and the initial sequence number"],"a":3,"e":"nmap ប្រើ IP ID field និង initial sequence number (ក្នុងចំណោមលក្ខណៈ TCP/IP ផ្សេងទៀត) ដើម្បី fingerprint OS។"},{"n":42,"q":"Which of these may be considered worst practice when it comes to vulnerability scans?","opts":["Scanning production servers","Notifying operations staff ahead of time","Taking no action on the results","Using limited details in your scan reports"],"a":2,"e":"ការ scan រកភាពងាយរងគ្រោះរួចមិនធ្វើអ្វីនឹងលទ្ធផល ជាការអនុវត្តអាក្រក់បំផុត។"},{"n":43,"q":"Which of these may be considered an evasive technique?","opts":["Scanning nonstandard ports","Encoding data","Using a proxy server","Using nmap in blind mode"],"a":1,"e":"Encoding/obfuscation ទិន្នន័យ ជាបច្ចេកទេស evasion ដើម្បីគេចពី signature របស់ IDS។"},{"n":44,"q":"If you were to notice operating system commands inside a DNS request while looking at a packet capture, what might you be looking at?","opts":["Tunneling attack","DNS amplification","DNS recursion","XML entity injection"],"a":0,"e":"ការឃើញ OS command ក្នុង DNS request ជាសញ្ញានៃ DNS tunneling attack។"},{"n":45,"q":"What would be a reason to use the Override feature in OpenVAS?","opts":["You want to run a different plugin for a vulnerability.","You want to change the scanner settings.","You want to use TCP rather than UDP.","You want to change a severity rating on a finding."],"a":3,"e":"Override ក្នុង OpenVAS ប្រើដើម្បីប្ដូរ severity rating នៃលទ្ធផលមួយ (ឧ. false positive)។"},{"n":46,"q":"What would you use credentials for in a vulnerability scanner?","opts":["Better reliability in network findings","Authenticating through VPNs for scans","Scanning for local vulnerabilities","Running an Active Directory scan"],"a":2,"e":"Credentials អនុញ្ញាតឱ្យ scanner login ចូលម៉ាស៊ីន ដើម្បី scan រក local vulnerabilities។"},{"n":47,"q":"What is fragroute primarily used for?","opts":["Altering network routes","Capturing fragmented packets","Fragmenting application traffic","Fragmenting layer 2 and layer 3 headers"],"a":3,"e":"fragroute កាត់ចែក (fragment) traffic ចេញ រួមទាំង header នៅស្រទាប់ ២ និង ៣ ដើម្បីគេចពី IDS។ (សំណួរនេះមានការជជែកគ្នា — ខ្លះយល់ថា C ក៏សមដែរ)"},{"n":48,"q":"What is it called when you obtain administrative privileges from a normal user account?","opts":["Privilege escalation","Account migration","Privilege migration","Account escalation"],"a":0,"e":"ការទទួលបានសិទ្ធិ administrator ពី account ធម្មតា ហៅថា Privilege escalation។"},{"n":49,"q":"What does John the Ripper's single crack mode, the default mode, do?","opts":["Checks every possible password","Uses known information and mangling rules","Uses a built in wordlist","Uses wordlist and mangling rules"],"a":1,"e":"Single crack mode របស់ John the Ripper ប្រើព័ត៌មានដែលដឹង (username, GECOS) បូកនឹង mangling rules។"},{"n":50,"q":"What is the trade off for using rainbow tables?","opts":["Disk space prioritized over speed","Accuracy prioritized over disk space","Speed prioritized over accuracy","Speed prioritized over disk space"],"a":3,"e":"Rainbow tables ជា trade-off៖ ប្រើ disk space ច្រើន ដើម្បីទទួលបានល្បឿនលឿន។"},{"n":51,"q":"Which of these is a reason to use an exploit against a local vulnerability?","opts":["Pivoting","Log manipulation","Privilege escalation","Password collection"],"a":2,"e":"Local exploit ត្រូវការសិទ្ធិលើម៉ាស៊ីនរួចហើយ ដូច្នេះគោលបំណងគឺ privilege escalation។"},{"n":52,"q":"Which of these techniques might be used directly to maintain access to a system?","opts":["Run key in the Windows Registry","Alternate data stream",".vimrc file on Linux","PowerShell"],"a":0,"e":"Run key ក្នុង Windows Registry ធ្វើឱ្យកម្មវិធីដំណើរការឡើងវិញរាល់ពេល boot = persistence។"},{"n":53,"q":"If you were looking for reliable exploits you could use against known vulnerabilities, what would you use?","opts":["Tor network","Meterpreter","msfvenom","Exploit DB"],"a":3,"e":"Exploit DB ជាឃ្លាំង exploit ដែលបានផ្ទៀងផ្ទាត់សម្រាប់ភាពងាយរងគ្រោះដែលដឹង។"},{"n":54,"q":"What might an attacker be trying to do by using the clearev command in Meterpreter?","opts":["Run an exploit","Manipulate time stamps","Manipulate log files","Remote login"],"a":2,"e":"clearev ក្នុង Meterpreter លុប Windows event log ដើម្បីលុបដាន។"},{"n":55,"q":"You've installed multiple files and processes on the compromised system. What should you also look at installing?","opts":["Registry keys","Alternate data streams","Rootkit","Root login"],"a":2,"e":"បន្ទាប់ពីដាក់ file និង process ច្រើន គួរដំឡើង rootkit ដើម្បីលាក់ពួកវា។"},{"n":56,"q":"What does pivoting on a compromised system get you?","opts":["Database access","A route to extra networks","Higher level of privileges","Persistent access"],"a":1,"e":"Pivoting ប្រើម៉ាស៊ីនដែលបានវាយចូល ជាផ្លូវទៅកាន់បណ្ដាញផ្សេងទៀត។"},{"n":57,"q":"What would you use the program rtgen for?","opts":["Generating wordlists","Generating rainbow tables","Generating firewall rules","Persistent access"],"a":1,"e":"rtgen (ក្នុង RainbowCrack) បង្កើត rainbow tables។"},{"n":58,"q":"What is one outcome from process injection?","opts":["Hidden process","Rootkit","Alternate data streams","Steganography"],"a":0,"e":"Process injection បញ្ចូល code ទៅក្នុង process ស្របច្បាប់ បង្កើតជា hidden process។"},{"n":59,"q":"Which tool would you use to compromise a system and then perform post exploitation actions?","opts":["nmap","John the Ripper","searchsploit","Metasploit"],"a":3,"e":"Metasploit វាយចូលប្រព័ន្ធ ហើយផ្ដល់ Meterpreter សម្រាប់ post-exploitation។"},{"n":60,"q":"What application would be a common target for client side exploits?","opts":["Web server","Web browser","Web application firewall","Web pages"],"a":1,"e":"Web browser ជាគោលដៅទូទៅបំផុតនៃ client-side exploit។"},{"n":61,"q":"What are two advantages of using a rootkit?","opts":["Installing alternate data streams and Registry keys","Creating Registry keys and hidden processes","Hiding processes and files","Hiding files and Registry keys"],"a":2,"e":"Rootkit លាក់ process និង file ពី OS និងអ្នកប្រើ។"},{"n":62,"q":"What technique might be mostly likely to be used to gather credentials from a remote system on a Windows network?","opts":["Kerberoasting","Fuzzing","Rootkits","PowerShell scripting"],"a":0,"e":"Kerberoasting ស្នើសុំ service ticket ពី Kerberos រួច crack offline ដើម្បីបាន credential។"},{"n":63,"q":"What language might be most likely to be used by attackers who want to live off the land on Windows systems?","opts":["Ruby","Python","cmdlets","PowerShell"],"a":3,"e":"PowerShell មានស្រាប់លើ Windows ដូច្នេះជាឧបករណ៍ 'living off the land' ដ៏ពេញនិយម។"},{"n":64,"q":"If you wanted to identify vulnerabilities previously undiscovered in an application, including a network service, what tool might you use?","opts":["Rubeus","Ophcrack","John the Ripper","Peach"],"a":3,"e":"Peach ជា fuzzer ប្រើដើម្បីរកភាពងាយរងគ្រោះថ្មី (0-day) ក្នុង application ឬ network service។"},{"n":65,"q":"What is the primary difference between a worm and a virus?","opts":["A worm uses polymorphic code.","A virus uses polymorphic code.","A worm can self propagate.","A virus can self propagate."],"a":2,"e":"Worm ចម្លងខ្លួនឯង (self-propagate) បាន ចំណែក virus ត្រូវការ host/អ្នកប្រើ។"},{"n":66,"q":"What is one advantage of static analysis over dynamic analysis of malware?","opts":["Malware is guaranteed to deploy.","Dynamic analysis is untrustworthy.","Static analysis limits your exposure to infection.","Static analysis can be run in virtual machines."],"a":2,"e":"Static analysis មិនដំណើរការ malware ដូច្នេះកាត់បន្ថយហានិភ័យឆ្លង។"},{"n":67,"q":"What would you use VirusTotal for?","opts":["Checking your system for viruses","Endpoint protection","As a repository of malware research","Identifying malware against antivirus engines"],"a":3,"e":"VirusTotal ដាក់ file ទៅ engine antivirus ច្រើន ដើម្បីមើលថាតើ engine ណាខ្លះរកឃើញ។"},{"n":68,"q":"What is the purpose of a packer for malware?","opts":["To obscure the actual program","To ensure that the program is all binary","To compile the program into a tight space","To remove null characters"],"a":0,"e":"Packer បង្ហាប់/អ៊ិនកូដ binary ដើម្បីលាក់កូដពិត និងគេច signature detection។"},{"n":69,"q":"What is the primary purpose of polymorphic code for malware programs?","opts":["Efficiency of execution","Propagation of the malware","Antivirus evasion","Faster compilation"],"a":2,"e":"Polymorphic code ប្ដូររូបរាងរាល់ដង ដើម្បីគេចពី signature-based antivirus។"},{"n":70,"q":"What would be one reason not to write malware in Python?","opts":["The Python interpreter is slow.","The Python interpreter may not be available.","Library support is inadequate.","Python is a hard language to learn."],"a":1,"e":"Python ត្រូវការ interpreter — ប្រព័ន្ធគោលដៅភាគច្រើន (Windows) មិនមាន Python ដំឡើងស្រាប់ទេ។"},{"n":71,"q":"If you wanted a tool that could help with both static and dynamic analysis of malware, which would you choose?","opts":["Cutter","IDA","PE Explorer","MalAlyzer"],"a":1,"e":"IDA (Pro) មានទាំង disassembler (static) និង debugger (dynamic)។"},{"n":72,"q":"What is the purpose of using a disassembler?","opts":["Converting opcodes to mnemonics","Converting mnemonics to opcodes","Translating mnemonics to operations","Removing the need for an assembler"],"a":0,"e":"Disassembler បំប្លែង opcode (machine code) ទៅជា mnemonic (assembly)។"},{"n":73,"q":"What does the malware that is referred to as a dropper do?","opts":["Drops antivirus operations","Drops CPU protections against malicious execution","Drops files that may be more malware","Drops the malware into the Recycle Bin"],"a":2,"e":"Dropper ជា malware ដែលទាញយក/ដាក់ចុះ malware បន្ថែមទៀតលើប្រព័ន្ធ។"},{"n":74,"q":"Why would you use an encoder when you are creating malware using Metasploit?","opts":["To compile the malware","To evade antivirus","To evade user detection","To compress the malware"],"a":1,"e":"Encoder ក្នុង Metasploit (ឧ. msfvenom) ប្ដូររូបរាង payload ដើម្បីគេច antivirus។"},{"n":75,"q":"What is the difference between a virus and ransomware?","opts":["Ransomware may be a virus.","Ransomware includes Bitcoins.","Ransomware is generated only in Russia.","A virus runs only on Windows systems."],"a":0,"e":"Ransomware អាចជា virus ដែរ — វាជាចំណាត់ថ្នាក់តាមអាកប្បកិរិយា (ចាក់សោទាមទារលុយ) មិនមែនតាមវិធីរីករាលដាល។"},{"n":76,"q":"Why would someone use a Trojan?","opts":["It acts as malware infrastructure.","It evades antivirus.","It pretends to be something else.","It's polymorphic."],"a":2,"e":"Trojan ក្លែងខ្លួនជាកម្មវិធីមានប្រយោជន៍ ដើម្បីបញ្ឆោតឱ្យអ្នកប្រើដំឡើងវា។"},{"n":77,"q":"Which of these tools would be most beneficial when trying to dynamically analyze malware?","opts":["Cutter","OllyDbg","Metasploit","AV TEST"],"a":1,"e":"OllyDbg ជា debugger — ត្រូវការដំណើរការ malware ពិត = dynamic analysis។"},{"n":78,"q":"Which of these would be a reason why it is best for communications to originate from inside the infected network?","opts":["Antivirus","Virtual machines","Intrusion detection","Firewall"],"a":3,"e":"Firewall ភាគច្រើន block traffic ចូល (inbound) តែអនុញ្ញាត outbound ដូច្នេះ malware ភ្ជាប់ចេញពីខាងក្នុង។"},{"n":79,"q":"What is the tactic of allowing software to continue running across reboots of a system called?","opts":["Obfuscation","Persistence","Disassembly","Packing"],"a":1,"e":"ការធ្វើឱ្យកម្មវិធីនៅតែដំណើរការក្រោយ reboot ហៅថា Persistence។"},{"n":80,"q":"What tool could you use to deeply analyze malicious software?","opts":["Strings","Hashing","Ghidra","Metasploit"],"a":2,"e":"Ghidra (NSA) ជា reverse-engineering suite សម្រាប់វិភាគ malware យ៉ាងស៊ីជម្រៅ។"},{"n":81,"q":"You are working on a red team engagement. Your team leader has asked you to use baiting as a way to get in. What are you being asked to do?","opts":["Make phone calls","Clone a website","Leave USB sticks around","Spoof an RFID ID"],"a":2,"e":"Baiting = ទុក USB stick ដែលឆ្លងមេរោគនៅកន្លែងដែលគេរើសយកទៅដោត។"},{"n":82,"q":"Which of the social engineering principles is in use when you see a line of people at a vendor booth at a security conference waiting to grab free USB sticks and CDs?","opts":["Reciprocity","Social proof","Authority","Scarcity"],"a":1,"e":"មនុស្សតម្រង់ជួរព្រោះឃើញអ្នកដទៃធ្វើ — នេះជាគោលការណ៍ Social proof។"},{"n":83,"q":"What is a viable approach to protecting against tailgaiting?","opts":["Biometrics","Badge access","Phone verification","Man traps"],"a":3,"e":"Man trap (ទ្វារពីរជាន់ចូលម្ដងម្នាក់) ការពារ tailgating បានផ្ទាល់។"},{"n":84,"q":"Why would you use wireless social engineering?","opts":["To send phishing messages","To gather credentials","To get email addresses","To make phone calls"],"a":1,"e":"Wireless social engineering (ឧ. evil twin + captive portal ក្លែងក្លាយ) ប្រើដើម្បីប្រមូល credentials។"},{"n":85,"q":"What social engineering vector would you use if you wanted to gain access to a building?","opts":["Impersonation","Scarcity","Vishing","Smishing"],"a":0,"e":"ដើម្បីចូលអគារ អ្នកវាយប្រហារប្រើ Impersonation (ក្លែងខ្លួនជាជាងជួសជុល, អ្នកដឹកជញ្ជូន។ល។)។"},{"n":86,"q":"Which of these would be an example of pretexting?","opts":["Web page asking for credentials","A cloned badge","An email from a former coworker","Rogue wireless access point"],"a":2,"e":"Pretexting = បង្កើតរឿងក្លែងក្លាយគួរឱ្យជឿ ដូចជា email ពី 'អតីតមិត្តរួមការងារ'។"},{"n":87,"q":"What tool could you use to clone a website?","opts":["httclone","curl get","wget","wclone"],"a":2,"e":"wget (ជាមួយ --mirror/-r) ទាញយកគេហទំព័រទាំងមូលមក clone។"},{"n":88,"q":"Which of these forms of biometrics is least likely to give a high true accept rate while minimizing false reject rates?","opts":["Voiceprint","Iris scanning","Retinal scanning","Fingerprint scanning"],"a":0,"e":"Voiceprint មិនស្ថិតស្ថេរ (ជំងឺ, សំឡេងរំខាន) ដូច្នេះមានអត្រាកំហុសខ្ពស់ជាង iris/retina/fingerprint។"},{"n":89,"q":"What attack can a proximity card be susceptible to?","opts":["Tailgating","Phishing","Credential theft","Cloning"],"a":3,"e":"Proximity card អាចត្រូវបាន clone ដោយឧបករណ៍អានពីចម្ងាយ។"},{"n":90,"q":"Which form of biometrics scans a pattern in the area of the eye around the pupil?","opts":["Retinal scanning","Fingerprint scanning","Iris scanning","Uvea scanning"],"a":2,"e":"Iris scanning ស្កេនលំនាំនៃ iris ដែលនៅជុំវិញ pupil។ Retinal ស្កេនសរសៃឈាមខាងក្រោយភ្នែក។"},{"n":91,"q":"What is an advantage of a phone call over a phishing email?","opts":["You are able to go into more detail with pretexting.","Phishing attacks are unreliable.","Not everyone has email, but everyone has a phone.","Pretexting works only over the phone."],"a":0,"e":"តាមទូរស័ព្ទ អ្នកអាចឆ្លើយតបភ្លាមៗ និងពង្រីករឿង pretexting បានលម្អិតជាង email។"},{"n":92,"q":"What is the web page you may be presented with when connecting to a wireless access point, especially in a public place?","opts":["Credential harvester","Captive portal","Wi Fi portal","Authentication point"],"a":1,"e":"ទំព័រដែលលេចឡើងពេលភ្ជាប់ Wi-Fi សាធារណៈ ហៅថា Captive portal។"},{"n":93,"q":"What tool could you use to generate email attacks as well as wireless attacks?","opts":["Meterpreter","wifiphisher","SE Toolkit","Social Automator"],"a":2,"e":"SET (Social-Engineer Toolkit) ធ្វើបានទាំង phishing email, website cloning និង wireless attack។"},{"n":94,"q":"Your colleagues are suddenly calling you to indicate they received a strange email from you and are wondering what you are up to. If you didn't send the message, what should you suspect?","opts":["Quid pro quo","Cloning","Contact spamming","Man traps"],"a":2,"e":"មិត្តភក្តិទទួល email ចម្លែកពី 'អ្នក' — នេះជា Contact spamming (លួច contact list រួចផ្ញើតទៅ)។"},{"n":95,"q":"Which of these pieces of information would not be of interest to an attacker trying to steal your identity?","opts":["Birthplace","First book you ever read","Mother's maiden name","Social Security number"],"a":1,"e":"សៀវភៅដំបូងដែលអ្នកអាន គ្មានតម្លៃសម្រាប់លួចអត្តសញ្ញាណ។ ទីកន្លែងកំណើត, នាមត្រកូលម្ដាយ, SSN សុទ្ធតែសំខាន់។"},{"n":96,"q":"If an attacker is using quid pro quo as a tactic to get you to provide information to them, who may they be most likely to indicate they are?","opts":["Your car dealer","Help desk staff","Your mother","Your dog"],"a":1,"e":"Quid pro quo៖ អ្នកវាយប្រហារក្លែងជា Help desk ផ្ដល់ 'ជំនួយ' ជាថ្នូរនឹងព័ត៌មាន។"},{"n":97,"q":"What are the two types of wireless networks?","opts":["Star and ring","Bus and hybrid","Infrastructure and hybrid","Infrastructure and ad hoc"],"a":3,"e":"បណ្ដាញឥតខ្សែមាន ២ ប្រភេទ៖ Infrastructure (មាន AP) និង Ad hoc (peer-to-peer)។"},{"n":98,"q":"How many stages are used in the WPA handshake?","opts":["Two","Four","Three","One"],"a":1,"e":"WPA ប្រើ four-way handshake (៤ ជំហាន)។"},{"n":99,"q":"What mode has to be enabled on a network interface to allow all headers in wireless traffic to be captured?","opts":["Promiscuous","Monitor","Radio","Wireless LAN"],"a":1,"e":"Monitor mode អនុញ្ញាតឱ្យចាប់ frame ឥតខ្សែទាំងអស់រួមទាំង radio header។"},{"n":100,"q":"What wireless attack would you use to take a known piece of information to be able to decrypt wireless traffic?","opts":["Sniffing","Deauthentication","Key reinstallation","Evil twin"],"a":2,"e":"Key reinstallation attack (KRACK) ប្រើ nonce/key ដែលដឹងហើយ ដើម្បី decrypt traffic។"},{"n":101,"q":"What is the purpose of performing a Bluetooth scan?","opts":["Identifying open ports","Identifying available profiles","Identifying endpoints","Identifying vendors"],"a":2,"e":"Bluetooth scan រកឃើញឧបករណ៍ (endpoints) ដែលនៅជិត។"},{"n":102,"q":"What is the purpose of a deauthentication attack?","opts":["Disabling stations","Forcing stations to reauthenticate","Reducing the number of steps in the handshake","Downgrading encryption"],"a":1,"e":"Deauthentication attack បង្ខំឱ្យ station ផ្ដាច់ រួច reauthenticate ដើម្បីចាប់ handshake។"},{"n":103,"q":"What is the policy that allows people to use their own smartphones on the enterprise network?","opts":["Bring your own device","Use your own device","Bring your own smart device","Use your own smart device"],"a":0,"e":"គោលនយោបាយនោះឈ្មោះ BYOD — Bring Your Own Device។"},{"n":104,"q":"What part of the encryption process was weak in WEP?","opts":["Keying","Diffie Hellman","Initialization vector","Seeding vector"],"a":2,"e":"WEP ខ្សោយត្រង់ Initialization Vector (IV) ខ្លីត្រឹម ២៤ bit និងប្រើឡើងវិញ។"},{"n":105,"q":"What is the WPA four way handshake used for?","opts":["Passing keys","Deriving keys","Encrypting messages","Initialization seeding"],"a":1,"e":"Four-way handshake របស់ WPA ប្រើដើម្បី derive key (PTK) មិនមែនផ្ញើ key ត្រង់ៗទេ។"},{"n":106,"q":"What is the SSID used for?","opts":["Encrypting messages","Providing an IP address","Identifying a network","Seeding a key"],"a":2,"e":"SSID ជាឈ្មោះកំណត់អត្តសញ្ញាណបណ្ដាញឥតខ្សែ។"},{"n":107,"q":"What kind of access point is being used in an evil twin attack?","opts":["Infrastructure","Ad hoc","WPA","Rogue"],"a":3,"e":"Evil twin ប្រើ Rogue access point ដែលក្លែងបណ្ដាញពិត។"},{"n":108,"q":"How does an evil twin attack work?","opts":["Phishing users for credentials","Spoofing an SSID","Changing an SSID","Injecting four way handshakes"],"a":1,"e":"Evil twin ដំណើរការដោយ spoofing SSID របស់បណ្ដាញស្របច្បាប់។"},{"n":109,"q":"What is a method to successfully get malware onto a mobile device without having to get the user to do something they wouldn't normally do?","opts":["Using the Apple Store or Google Play Store","Using external storage on an Android","Using a third party app store","Jailbreaking"],"a":2,"e":"Third-party app store គឺជាកន្លែងដែលអ្នកប្រើទាញយក app ធម្មតា ដូច្នេះមិនត្រូវការបញ្ឆោតបន្ថែម។"},{"n":110,"q":"What would you use a bluebugging attack for?","opts":["Identifying Bluetooth devices nearby","Listening to a physical space","Enabling a phone's camera","Gathering data from a target system"],"a":1,"e":"Bluebugging គ្រប់គ្រងទូរស័ព្ទ អាចបើក microphone ដើម្បីស្ដាប់សំឡេងជុំវិញ។"},{"n":111,"q":"Why is bluesnarfing potentially more dangerous than bluejacking from the standpoint of the victim?","opts":["Bluejacking sends while bluesnarfing receives.","Bluejacking receives while bluesnarfing sends.","Bluejacking installs keyloggers.","Bluesnarfing installs keyloggers."],"a":0,"e":"Bluejacking គ្រាន់តែផ្ញើសារចូល ចំណែក Bluesnarfing ទាញយកទិន្នន័យចេញ — គ្រោះថ្នាក់ជាង។"},{"n":112,"q":"What tool would allow you to run an evil twin attack?","opts":["Wireshark","Ettercap","wifiphisher","aircrack ng"],"a":2,"e":"wifiphisher បង្កើត rogue AP ស្វ័យប្រវត្តិសម្រាប់ evil twin attack។"},{"n":113,"q":"What types of authentication are allowed in a WPA encrypted network?","opts":["Handshake and personal","Personal and enterprise","Enterprise and handshake","802.11 and personal"],"a":1,"e":"WPA អនុញ្ញាត ២ របៀប៖ Personal (PSK) និង Enterprise (802.1X/RADIUS)។"},{"n":114,"q":"What wouldn't you see when you capture wireless traffic that includes radio headers?","opts":["Capabilities","Probe requests","SSIDs","Network type"],"a":1,"e":"Radio header + beacon frame បង្ហាញ capabilities, SSID និង network type។ Probe request ជា frame ដាច់ដោយឡែក មិនមែនព័ត៌មានក្នុង header ទេ។"},{"n":115,"q":"What does WPA3 use to start the authentication and association process between stations and access points?","opts":["Four way handshake","Mutual authentication of peers","Simultaneous authentication of equals","Separate authentication with encryption"],"a":2,"e":"WPA3 ប្រើ SAE — Simultaneous Authentication of Equals (Dragonfly handshake)។"},{"n":116,"q":"Which of these Bluetooth attacks can result in a denial of service?","opts":["Bluejacking","Bluesnarfing","Bluedumping","Bluesmack"],"a":3,"e":"Bluesmack ផ្ញើ L2CAP ping ធំៗ បង្កជា denial of service។"},{"n":117,"q":"What technique would you likely be using if you had a Pringles can along with a laptop?","opts":["Bluesnarfing","Wireless footprinting","Evil twin","Key reinstallation"],"a":1,"e":"កំប៉ុង Pringles ធ្វើជា cantenna (antenna directional) សម្រាប់ wireless footprinting/wardriving។"}];
+const SA = [{"n":1,"q":"តើ CIA ជាអ្វី នៅក្នុង Cybersecurity?","a":"CIA Triad ជាគ្រឹះនៃសន្តិសុខព័ត៌មាន មាន ៣ ធាតុ៖\n\n• **Confidentiality (ការសម្ងាត់)** — ធានាថាមានតែអ្នកមានសិទ្ធិទេទើបចូលមើលទិន្នន័យបាន។ ឧបករណ៍៖ Encryption, Access Control, MFA។\n• **Integrity (ភាពត្រឹមត្រូវ)** — ធានាថាទិន្នន័យមិនត្រូវបានកែប្រែដោយគ្មានការអនុញ្ញាត។ ឧបករណ៍៖ Hashing (SHA-256), Digital Signature, Checksum។\n• **Availability (ភាពអាចប្រើបាន)** — ធានាថាប្រព័ន្ធនិងទិន្នន័យអាចប្រើបាននៅពេលត្រូវការ។ ឧបករណ៍៖ Backup, Redundancy, DDoS protection។\n\nការវាយប្រហារនីមួយៗតែងតែបំពានលើធាតុមួយ ឬច្រើនក្នុងចំណោមនេះ។"},{"n":2,"q":"ចូររាប់ពីប្រភេទនៃ Cyber Attacks","a":"ប្រភេទសំខាន់ៗ៖\n\n• **Malware** — Virus, Worm, Trojan, Ransomware, Spyware, Rootkit, Botnet\n• **Social Engineering** — Phishing, Spear phishing, Vishing, Smishing, Pretexting, Baiting, Tailgating\n• **Password Attacks** — Brute force, Dictionary, Rainbow table, Credential stuffing, Keylogging\n• **Network Attacks** — Man-in-the-Middle (MitM), Sniffing, Spoofing (IP/ARP/DNS), Session hijacking\n• **DoS / DDoS** — SYN flood, Smurf, Amplification attack\n• **Web Application Attacks** — SQL Injection, XSS, CSRF, Directory traversal, File inclusion\n• **Wireless Attacks** — Evil twin, Deauthentication, KRACK, WEP cracking, Bluesnarfing\n• **Zero-day & Supply chain attacks** — ប្រើភាពងាយរងគ្រោះដែលមិនទាន់មានបំណះ"},{"n":3,"q":"តើគេប្រើប្រាស់ fping និង MegaPing សម្រាប់ធ្វើអ្វី?","a":"ទាំងពីរប្រើសម្រាប់ **Host Discovery / Network Scanning** — គឺរកមើលថាម៉ាស៊ីនណាខ្លះកំពុងដំណើរការនៅក្នុងបណ្ដាញ។\n\n• **fping** — កម្មវិធី command-line លើ Linux។ ខុសពី ping ធម្មតាត្រង់វាអាច ping IP ច្រើនក្នុងពេលតែមួយ (parallel) និងទទួលយក range ឬ file បញ្ជី IP។ ឧ. `fping -a -g 192.168.1.0/24`។ ប្រើសម្រាប់ **ping sweep** ដើម្បីធ្វើផែនទីបណ្ដាញយ៉ាងលឿន។\n\n• **MegaPing** — ឧបករណ៍ GUI លើ Windows ដែលរួមបញ្ចូល IP scanner, Port scanner, NetBIOS scanner, Share scanner, Traceroute, Whois និង DNS lookup ក្នុងកម្មវិធីតែមួយ។\n\nទាំងពីរស្ថិតក្នុងដំណាក់កាល **Reconnaissance / Scanning** នៃ ethical hacking។"},{"n":4,"q":"ចូររាប់ពី Port Scanning នៅក្នុង nmap","a":"ប្រភេទ scan សំខាន់ៗក្នុង nmap៖\n\n• **-sS — SYN / Half-open scan** — ផ្ញើ SYN, បើទទួល SYN/ACK = open រួចផ្ញើ RST មិនបញ្ចប់ handshake។ លឿន និងស្ងាត់ (default សម្រាប់ root)។\n• **-sT — TCP Connect scan** — បញ្ចប់ three-way handshake ពេញលេញ។ ងាយត្រូវចាប់បាន តែមិនត្រូវការសិទ្ធិ root។\n• **-sU — UDP scan** — scan port UDP។ យឺត ព្រោះត្រូវរង់ចាំ ICMP Port Unreachable។\n• **-sA — ACK scan** — មិនប្រាប់ថា port បើកឬបិទ តែប្រាប់ថា filtered ឬ unfiltered → ប្រើ map ច្បាប់ firewall។\n• **-sF / -sX / -sN — FIN, Xmas, Null scan** — ផ្ញើ flag ចម្លែក ដើម្បីគេច firewall សាមញ្ញ។ Port បិទឆ្លើយ RST, port បើកមិនឆ្លើយ។\n• **-sI — Idle / Zombie scan** — ប្រើម៉ាស៊ីនទីបី លាក់អត្តសញ្ញាណពិត។\n• **-sV** — រកកំណែ service | **-O** — រក OS | **-sn** — ping sweep (គ្មាន port scan) | **-p-** — scan គ្រប់ ៦៥៥៣៥ port\n\nស្ថានភាព port៖ open, closed, filtered, unfiltered, open|filtered, closed|filtered។"},{"n":5,"q":"ចូររាប់ពីប្រភេទ Malware មានអ្វីខ្លះ?","a":"• **Virus** — ភ្ជាប់ខ្លួនទៅ file/program ត្រូវការអ្នកប្រើដំណើរការវា ទើបរាលដាល។\n• **Worm** — ចម្លងខ្លួនឯងតាមបណ្ដាញ **ដោយមិនត្រូវការអ្នកប្រើ**។\n• **Trojan** — ក្លែងខ្លួនជាកម្មវិធីមានប្រយោជន៍ តែលាក់មុខងារព្យាបាទ។\n• **Ransomware** — អ៊ិនគ្រីបឯកសារ រួចទាមទារថ្លៃលោះ។\n• **Spyware / Keylogger** — លួចតាមដានសកម្មភាព និងវាយបញ្ចូលក្តារចុច។\n• **Adware** — បង្ហាញផ្សាយពាណិជ្ជកម្មរំខាន និងតាមដានទម្លាប់។\n• **Rootkit** — លាក់ខ្លួននៅកម្រិតជ្រៅ (kernel) លាក់ process និង file។\n• **Backdoor** — បើកផ្លូវចូលសម្ងាត់សម្រាប់អ្នកវាយប្រហារ។\n• **Bot / Botnet** — ធ្វើឱ្យម៉ាស៊ីនក្លាយជា 'zombie' ស្តាប់បញ្ជា C&C ដើម្បីវាយ DDoS។\n• **Dropper / Downloader** — ដំណាក់កាលទី១ ដែលទាញយក malware បន្ថែម។\n• **Fileless malware** — ដំណើរការក្នុង memory (ឧ. PowerShell) មិនសរសេរ file លើ disk។\n• **Logic bomb** — ផ្ទុះនៅពេលលក្ខខណ្ឌណាមួយកើតឡើង។"},{"n":6,"q":"តើ Social Engineering មានអ្វីខ្លះ?","a":"Social Engineering = ការបញ្ឆោត **មនុស្ស** (មិនមែនបច្ចេកវិទ្យា) ដើម្បីទទួលបានព័ត៌មាន ឬសិទ្ធិចូល។\n\n**ប្រភេទ៖**\n• **Phishing** — email ក្លែងក្លាយ | **Spear phishing** — សំដៅបុគ្គលជាក់លាក់ | **Whaling** — សំដៅថ្នាក់ដឹកនាំ\n• **Vishing** — តាមទូរស័ព្ទ | **Smishing** — តាម SMS\n• **Pretexting** — បង្កើតរឿងក្លែងក្លាយគួរឱ្យជឿ\n• **Baiting** — ទុក USB ឆ្លងមេរោគឱ្យគេរើស\n• **Quid pro quo** — ផ្ដល់ 'ជំនួយ' ជាថ្នូរនឹងព័ត៌មាន (ឧ. ក្លែងជា Help desk)\n• **Tailgating / Piggybacking** — ដើរតាមក្រោយបុគ្គលិកចូលអគារ\n• **Impersonation** — ក្លែងខ្លួនជាជាងជួសជុល អ្នកដឹកជញ្ជូន ឬអ្នកគ្រប់គ្រង\n• **Dumpster diving / Shoulder surfing** — រុករកសំរាម / លបមើលពីក្រោយស្មា\n\n**គោលការណ៍ចិត្តសាស្ត្រដែលគេប្រើ៖** Authority, Urgency, Scarcity, Social proof, Reciprocity, Liking, Fear។\n\n**ការពារ៖** បណ្ដុះបណ្ដាលបុគ្គលិក, ផ្ទៀងផ្ទាត់អត្តសញ្ញាណ, MFA, គោលនយោបាយច្បាស់លាស់។"},{"n":7,"q":"ចូររាប់ពីប្រភេទនៃ WiFi IEEE Standard 802.11 មានអ្វីខ្លះ?","a":"| ស្តង់ដារ | ឆ្នាំ | ប្រេកង់ | ល្បឿនអតិបរមា |\n|---|---|---|---|\n| 802.11 (original) | 1997 | 2.4 GHz | 2 Mbps |\n| **802.11a** | 1999 | 5 GHz | 54 Mbps |\n| **802.11b** | 1999 | 2.4 GHz | 11 Mbps |\n| **802.11g** | 2003 | 2.4 GHz | 54 Mbps |\n| **802.11n** (Wi-Fi 4) | 2009 | 2.4 + 5 GHz | 600 Mbps (MIMO) |\n| **802.11ac** (Wi-Fi 5) | 2013 | 5 GHz | ~3.5 Gbps (MU-MIMO) |\n| **802.11ax** (Wi-Fi 6 / 6E) | 2019 | 2.4 + 5 (+6) GHz | ~9.6 Gbps (OFDMA) |\n| **802.11be** (Wi-Fi 7) | 2024 | 2.4 + 5 + 6 GHz | ~46 Gbps |\n\n**ស្តង់ដារពាក់ព័ន្ធសន្តិសុខ៖** 802.11i (WPA2/AES-CCMP), 802.1X (Enterprise authentication)។\n**ការវិវត្តនៃការអ៊ិនគ្រីប៖** WEP (ខូច) → WPA (TKIP) → WPA2 (AES-CCMP) → WPA3 (SAE)។"},{"n":8,"q":"តើ Wireless Footprinting ជាអ្វី?","a":"**Wireless Footprinting** ជាដំណាក់កាលប្រមូលព័ត៌មានអំពីបណ្ដាញឥតខ្សែរបស់គោលដៅ — មុនពេលវាយប្រហារពិតប្រាកដ។\n\n**គោលបំណងគឺរក៖** SSID (រួមទាំង hidden), BSSID/MAC របស់ AP, channel, ប្រភេទអ៊ិនគ្រីប (WEP/WPA/WPA2/WPA3), កម្លាំងសញ្ញា, បញ្ជី client ដែលភ្ជាប់, និងព្រំដែនរូបវន្តនៃសញ្ញា។\n\n**វិធីសាស្ត្រ៖**\n• **Wardriving** — បើកឡានកាន់ laptop/GPS ស្កេនបណ្ដាញតាមផ្លូវ (ក៏មាន warwalking, warflying)\n• **Passive sniffing** — ដាក់ NIC ក្នុង **monitor mode** ស្ដាប់ beacon frame ដោយមិនផ្ញើអ្វី (រកមិនឃើញ)\n• **Active probing** — ផ្ញើ probe request ដើម្បីបង្ខំ AP ឆ្លើយតប\n• **Directional antenna** — ឧ. cantenna ធ្វើពីកំប៉ុង Pringles ដើម្បីចាប់សញ្ញាពីចម្ងាយ\n\n**ឧបករណ៍៖** Kismet, airodump-ng (aircrack-ng suite), inSSIDer, NetStumbler, Wireshark, WiGLE.net។"},{"n":9,"q":"តើអ្វីជា Denial of Service Attacks?","a":"**DoS** = ការវាយប្រហារដែលធ្វើឱ្យសេវាមិនអាចប្រើបាន សម្រាប់អ្នកប្រើស្របច្បាប់ — វាយប្រហារលើ **Availability** នៃ CIA Triad។ បើវាយពីម៉ាស៊ីនច្រើន (botnet) ព្រមគ្នា ហៅថា **DDoS**។\n\n**ប្រភេទ៖**\n• **Volumetric** — បំពេញ bandwidth៖ UDP flood, ICMP flood, DNS/NTP **amplification**\n• **Protocol attack** — ធ្វើឱ្យអស់ធនធាន៖ **SYN flood** (បើក half-open connection ច្រើន), Ping of Death, Smurf, Teardrop\n• **Application layer** — HTTP flood, Slowloris (បើក connection ទុកយូរៗ)\n• **Distributed (DDoS)** — botnet រាប់ពាន់ម៉ាស៊ីនវាយក្នុងពេលតែមួយ\n\n**ការការពារ៖** Rate limiting, SYN cookies, Firewall/IPS, CDN និងសេវា DDoS mitigation (Cloudflare, Akamai), Anycast, Blackhole routing, Load balancing។"}];
+const CATS = [
+ {id:0,km:"មូលដ្ឋានបណ្ដាញ",en:"Networking",a:1,b:12},
+ {id:1,km:"មូលដ្ឋានសន្តិសុខ",en:"Security Foundations",a:13,b:27},
+ {id:2,km:"ការស៊ើបអង្កេត",en:"Footprinting & Recon",a:28,b:38},
+ {id:3,km:"ការស្កេន",en:"Scanning",a:39,b:47},
+ {id:4,km:"វាយចូលប្រព័ន្ធ",en:"System Hacking",a:48,b:64},
+ {id:5,km:"មេរោគ",en:"Malware",a:65,b:80},
+ {id:6,km:"វិស្វកម្មសង្គម",en:"Social Engineering",a:81,b:96},
+ {id:7,km:"ឥតខ្សែ និងទូរស័ព្ទ",en:"Wireless & Mobile",a:97,b:117},
+];
+const KH = ['០','១','២','៣','៤','៥','៦','៧','៨','៩'];
+const kn = n => String(n).split('').map(d=>KH[+d]||d).join('');
+
+let mode='study', selCats=new Set(['all']), selCount=20;
+let queue=[], idx=0, answers=[], startTime=0, timerId=null, elapsed=0;
+
+function show(id){
+  ['home','setup','quiz','result','flash'].forEach(x=>document.getElementById(x).classList.add('hide'));
+  document.getElementById(id).classList.remove('hide');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(timerId && id!=='quiz'){clearInterval(timerId);timerId=null;}
+}
+
+/* ---------- setup ---------- */
+function renderCats(){
+  const box=document.getElementById('catChips');
+  box.innerHTML='';
+  const mk=(label,val)=>{
+    const b=document.createElement('button');
+    b.className='chip'+(selCats.has(val)?' on':'');
+    b.innerHTML=label;
+    b.onclick=()=>{
+      if(val==='all'){selCats=new Set(['all']);}
+      else{
+        selCats.delete('all');
+        selCats.has(val)?selCats.delete(val):selCats.add(val);
+        if(!selCats.size)selCats=new Set(['all']);
+      }
+      renderCats();
+    };
+    box.appendChild(b);
+  };
+  mk('មេរៀនទាំងអស់ ('+kn(117)+')','all');
+  CATS.forEach(c=>mk(c.km+' <span style="opacity:.6">('+kn(c.b-c.a+1)+')</span>',c.id));
+}
+function renderCounts(){
+  const pool=poolSize();
+  const box=document.getElementById('countChips');
+  box.innerHTML='';
+  [10,20,30,50,pool].filter((v,i,a)=>v<=pool && a.indexOf(v)===i).forEach(v=>{
+    const b=document.createElement('button');
+    b.className='chip'+(selCount===v?' on':'');
+    b.textContent=(v===pool?'ទាំងអស់ ':'')+kn(v);
+    b.onclick=()=>{selCount=v;renderCounts();};
+    box.appendChild(b);
+  });
+}
+function poolSize(){return filtered().length;}
+function filtered(){
+  if(selCats.has('all'))return MC.slice();
+  return MC.filter(q=>[...selCats].some(id=>{const c=CATS[id];return q.n>=c.a&&q.n<=c.b;}));
+}
+function startStudySetup(){
+  mode='study';
+  document.getElementById('setupTitle').textContent='📖 របៀបរៀន';
+  document.getElementById('countBox').classList.add('hide');
+  renderCats(); show('setup');
+}
+function startExamSetup(){
+  mode='exam';
+  document.getElementById('setupTitle').textContent='⏱️ របៀបប្រឡង';
+  document.getElementById('countBox').classList.remove('hide');
+  renderCats();
+  const old=document.getElementById('catChips').onclick;
+  renderCounts(); show('setup');
+  document.getElementById('catChips').addEventListener('click',()=>setTimeout(()=>{ if(selCount>poolSize())selCount=poolSize(); renderCounts();},0));
+}
+
+/* ---------- quiz ---------- */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function beginQuiz(){
+  let pool=filtered();
+  if(!pool.length){alert('សូមជ្រើសរើសមេរៀនយ៉ាងតិចមួយ');return;}
+  if(mode==='exam'){
+    pool=shuffle(pool.slice()).slice(0,Math.min(selCount,pool.length));
+    queue=pool.map(q=>{
+      const order=shuffle([0,1,2,3]);
+      return {...q,order};
+    });
+  }else{
+    queue=pool.slice().sort((x,y)=>x.n-y.n).map(q=>({...q,order:[0,1,2,3]}));
+  }
+  idx=0; answers=new Array(queue.length).fill(null);
+  elapsed=0; startTime=Date.now();
+  if(mode==='exam'){
+    timerId=setInterval(tick,1000);
+  }
+  document.getElementById('timer').textContent = mode==='exam'?'00:00':'';
+  show('quiz'); render();
+}
+function tick(){
+  elapsed=Math.floor((Date.now()-startTime)/1000);
+  const m=String(Math.floor(elapsed/60)).padStart(2,'0'), s=String(elapsed%60).padStart(2,'0');
+  document.getElementById('timer').textContent=m+':'+s;
+}
+function render(){
+  const q=queue[idx];
+  document.getElementById('qCounter').textContent='សំណួរ '+kn(idx+1)+' / '+kn(queue.length)+(mode==='study'?'  •  #'+kn(q.n):'');
+  document.getElementById('progBar').style.width=((idx+1)/queue.length*100)+'%';
+  document.getElementById('qText').textContent=q.q;
+  const ob=document.getElementById('opts'); ob.innerHTML='';
+  const fb=document.getElementById('feedback'); fb.innerHTML='';
+  const given=answers[idx];
+  q.order.forEach((origIdx,pos)=>{
+    const b=document.createElement('button');
+    b.className='opt en';
+    b.innerHTML='<span class="k">'+'ABCD'[pos]+'</span><span>'+esc(q.opts[origIdx])+'</span>';
+    if(given!==null){
+      b.classList.add('locked');
+      if(mode==='study'){
+        if(origIdx===q.a)b.classList.add('ok');
+        else if(origIdx===given)b.classList.add('no');
+      }else{
+        if(origIdx===given)b.classList.add('sel');
+      }
+    }else{
+      b.onclick=()=>pick(origIdx);
+    }
+    ob.appendChild(b);
+  });
+  if(given!==null && mode==='study')showExpl(q,given);
+  document.getElementById('btnPrev').disabled = idx===0;
+  const nb=document.getElementById('btnNext');
+  nb.textContent = idx===queue.length-1 ? (mode==='exam'?'បញ្ចប់ និងមើលពិន្ទុ':'មើលលទ្ធផល') : 'បន្ទាប់ →';
+}
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function showExpl(q,given){
+  const fb=document.getElementById('feedback');
+  const ok=given===q.a;
+  fb.innerHTML='<div class="verdict '+(ok?'ok':'no')+'">'+(ok?'✓ ត្រឹមត្រូវ!':'✗ មិនត្រឹមត្រូវ — ចម្លើយត្រូវគឺ '+'ABCD'[q.order.indexOf(q.a)])+'</div>'
+    +'<div class="expl"><b>ការពន្យល់</b>'+q.e+'</div>';
+}
+function pick(origIdx){
+  answers[idx]=origIdx;
+  const q=queue[idx];
+  if(mode==='study'){render();}
+  else{
+    render();
+    setTimeout(()=>{ if(idx<queue.length-1){idx++;render();} },220);
+  }
+}
+function nav(d){
+  if(d>0 && idx===queue.length-1){finish();return;}
+  idx=Math.max(0,Math.min(queue.length-1,idx+d));
+  render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function quitQuiz(){ if(confirm('បញ្ឈប់មែនទេ? លទ្ធផលនឹងបាត់។')) show('home'); }
+
+function finish(){
+  if(timerId){clearInterval(timerId);timerId=null;}
+  const total=queue.length;
+  let correct=0;
+  queue.forEach((q,i)=>{if(answers[i]===q.a)correct++;});
+  const pct=Math.round(correct/total*100);
+  document.getElementById('scorePct').textContent=kn(pct)+'%';
+  document.getElementById('scoreText').textContent='ត្រូវ '+kn(correct)+' ក្នុងចំណោម '+kn(total)+' សំណួរ';
+  const g=document.getElementById('scoreGrade');
+  let label,col;
+  if(pct>=90){label='ពូកែណាស់! 🏆';col='var(--acc)';}
+  else if(pct>=75){label='ល្អ! 👍';col='var(--acc2)';}
+  else if(pct>=60){label='ជាប់ — នៅត្រូវរៀនបន្ថែម';col='var(--warn)';}
+  else{label='ត្រូវរៀនឡើងវិញ 📚';col='var(--bad)';}
+  g.textContent=label; g.style.background=col; g.style.color='#0b1020';
+  const m=Math.floor(elapsed/60), s=elapsed%60;
+  document.getElementById('scoreTime').textContent = mode==='exam' ? 'ពេលវេលា៖ '+kn(m)+' នាទី '+kn(s)+' វិនាទី' : '';
+  const wrong=queue.map((q,i)=>({q,g:answers[i]})).filter(x=>x.g!==x.q.a);
+  const rb=document.getElementById('reviewBox');
+  if(!wrong.length){rb.innerHTML='<div class="card" style="text-align:center;color:var(--acc);font-weight:700">🎉 ត្រូវទាំងអស់! គ្មានអ្វីត្រូវពិនិត្យឡើងវិញទេ។</div>';}
+  else{
+    rb.innerHTML='<div class="card"><div style="font-weight:700;margin-bottom:12px">ពិនិត្យឡើងវិញ ('+kn(wrong.length)+' សំណួរខុស)</div>'
+      + wrong.map(x=>'<div class="review-item">'
+        +'<div class="r1 en">#'+x.q.n+'. '+esc(x.q.q)+'</div>'
+        +(x.g===null?'<div class="r2">មិនបានឆ្លើយ</div>':'<div class="r2 en">✗ អ្នកឆ្លើយ៖ '+esc(x.q.opts[x.g])+'</div>')
+        +'<div class="r3 en">✓ ចម្លើយត្រូវ៖ '+esc(x.q.opts[x.q.a])+'</div>'
+        +'<div class="r4">'+x.q.e+'</div></div>').join('')+'</div>';
+  }
+  saveBest(pct);
+  show('result');
+}
+function retry(){ mode==='exam'?startExamSetup():startStudySetup(); }
+function saveBest(p){try{const k='cyberquiz_best';const b=+(localStorage.getItem(k)||0);if(p>b)localStorage.setItem(k,p);}catch(e){}}
+
+/* ---------- flashcards ---------- */
+function md(s){
+  const lines=s.split('\n'); let out='',ul=false,tbl=[];
+  const flushUl=()=>{if(ul){out+='</ul>';ul=false;}};
+  const flushTbl=()=>{
+    if(!tbl.length)return;
+    const rows=tbl.filter(r=>!/^\|[\s\-:|]+\|$/.test(r.trim()));
+    let h='<div class="tblwrap"><table>';
+    rows.forEach((r,i)=>{
+      const cells=r.split('|').slice(1,-1).map(c=>inline(c.trim()));
+      h+='<tr>'+cells.map(c=>i===0?'<th>'+c+'</th>':'<td>'+c+'</td>').join('')+'</tr>';
+    });
+    out+=h+'</table></div>'; tbl=[];
+  };
+  lines.forEach(L=>{
+    const t=L.trim();
+    if(t.startsWith('|')){flushUl();tbl.push(t);return;}
+    flushTbl();
+    if(t.startsWith('• ')){ if(!ul){out+='<ul>';ul=true;} out+='<li>'+inline(t.slice(2))+'</li>'; return; }
+    flushUl();
+    if(t)out+='<p>'+inline(t)+'</p>';
+  });
+  flushUl();flushTbl();
+  return out;
+}
+function inline(s){
+  return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+}
+function renderFlash(){
+  const box=document.getElementById('fcList');
+  box.innerHTML='<div class="card" style="margin-bottom:14px"><div style="font-weight:700">🗂️ សំណួរខ្លី — Short Answer</div>'
+    +'<div style="color:var(--dim);font-size:.86rem;margin-top:4px">ព្យាយាមឆ្លើយក្នុងចិត្តសិន រួចចុចដើម្បីមើលចម្លើយគំរូ</div></div>';
+  SA.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='fc';
+    d.innerHTML='<button><span class="n">'+kn(c.n)+'</span><span>'+esc(c.q)+'</span><span class="ar">▶</span></button>'
+      +'<div class="fcbody">'+md(c.a)+'</div>';
+    d.querySelector('button').onclick=()=>d.classList.toggle('open');
+    box.appendChild(d);
+  });
+}
+renderFlash();
+</script>
+</body>
+</html>
