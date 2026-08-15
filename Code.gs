@@ -12,7 +12,7 @@
  */
 
 var SHEET_NAME     = 'Scores';
-var EXPECTED_TOTAL = 20;     // must match CHALLENGE_N in index.html
+var EXPECTED_TOTAL = 10;     // must match CHALLENGE_N in index.html
 var MIN_SECONDS    = 5;
 var MAX_SECONDS    = 7200;
 var MAX_NAME       = 20;

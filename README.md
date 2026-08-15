@@ -22,7 +22,7 @@ shown after you answer in Study mode and in the review list after every round.
 
 ## Modes
 
-**ប្រកួត / Challenge** — the ranked mode. 20 random questions, 15 seconds each
+**ប្រកួត / Challenge** — the ranked mode. 10 random questions, 22 seconds each
 with a countdown ring, options shuffled, streak counter running. Answers reveal
 immediately and advance on their own. Only Challenge scores reach the leaderboard,
 so every run is comparable.
@@ -38,8 +38,8 @@ of everything you got wrong at the end.
 ## Progress and rewards
 
 - **Points** accumulate across every session and never reset.
-  Challenge pays `correct × 10 + streak × 5`, plus `20` for finishing under three
-  minutes — a perfect run is 320. Study and Exam pay `correct × 2`.
+  Challenge pays `correct × 15 + streak × 8`, plus `25` for finishing under 100
+  seconds — a perfect run is 255. Study and Exam pay `correct × 2`.
 - **Six rank titles** ladder up with your points:
 
   | Points | Rank |
@@ -58,7 +58,7 @@ of everything you got wrong at the end.
 ## Leaderboard
 
 Four boards: one per subject, plus a combined **សរុប** ranking that adds your best
-run in each subject together out of 60 and shows how many subjects you have
+run in each subject together out of 30 and shows how many subjects you have
 attempted. Everything sorts by score first, then by fastest time.
 
 The top three stand on a podium with gold, silver and bronze medals — first place
@@ -96,7 +96,7 @@ submission and 60-second caching on reads.
 
 Adding a subject takes two edits — one entry in the `SUBJECTS` array in
 `index.html`, and the matching id in `SUBJECTS` / `SUBJECT_IDS` in `Code.gs`.
-Everything else (filters, challenge, boards, scoring out of `20 × subjects`)
+Everything else (filters, challenge, boards, scoring out of `10 × subjects`)
 follows automatically.
 
 ## Accuracy

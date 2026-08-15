@@ -472,7 +472,7 @@ footer a{color:var(--green);text-decoration:none;font-weight:600}
     </div>
     <button class="mprimary" onclick="startChallenge()">
       <svg class="ic " viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bolt"/></svg>
-      <span><b>ចាប់ផ្តើមប្រកួត</b><small>២០ សំណួរ · ១៥ វិនាទី/សំណួរ</small></span>
+      <span><b>ចាប់ផ្តើមប្រកួត</b><small>១០ សំណួរ · ២២ វិនាទី/សំណួរ</small></span>
       <span class="go"><svg class="ic " viewBox="0 0 24 24" aria-hidden="true"><use href="#i-right"/></svg></span>
     </button>
     <div class="grid2">
@@ -654,9 +654,9 @@ const Q_AP    = [{"n": 1, "q": "តើ Variable ជាអ្វី?", "opts": ["
    Google Apps Script Web App URL (ends with /exec).
    Leave "" to disable the leaderboard; everything else still works.
    ============================================================ */
-const API_URL = "https://script.google.com/macros/s/AKfycbxu4TKhiN5e72aSUbQBxk45KAV25VLo5s4nwMvP0UogqjY9SY3bbHQaa-CaIFyZmpPH/exec";
-const CHALLENGE_N = 20;   /* must match EXPECTED_TOTAL in Code.gs */
-const QTIME       = 15;   /* seconds per question, challenge mode */
+const API_URL = "https://script.google.com/macros/s/AKfycbzLXAb5Kf470DdqfCPr2vxc7gEVs1SJPzsftWziT1eBc7wXmzdjD9-A0u3BWipwU2jE/exec";
+const CHALLENGE_N = 10;   /* must match EXPECTED_TOTAL in Code.gs */
+const QTIME       = 22;   /* seconds per question, challenge mode */
 
 const SUBJECTS = [
   { id:'cyber', name:'Cybersecurity', short:'Cyber', icon:'shield', q:Q_CYBER, fc:F_CYBER,
@@ -1127,7 +1127,7 @@ function finish(){
   const prevBest=bestOf(cur.id);
   let won=0;
   if(mode==='challenge'){
-    won=correct*10 + bestStreak*5 + (elapsed<180?20:0);
+    won=correct*15 + bestStreak*8 + (elapsed<100?25:0);
     addXp(won);
     $('xpWinVal').textContent='+'+won;
     $('xpWin').classList.remove('hide');
@@ -1394,7 +1394,7 @@ function loadBoard(){
   const isOverall = boardTab==='overall';
   $('boardHint').textContent = isOverall
     ? 'ពិន្ទុល្អបំផុតនៃមុខវិជ្ជាទាំង '+kn(SUBJECTS.length)+' បូកបញ្ចូលគ្នា (អតិបរមា '+kn(SUBJECTS.length*CHALLENGE_N)+')'
-    : (SUBJ_BY_ID[boardTab]?SUBJ_BY_ID[boardTab].name:'')+' • ប្រកួត ២០ សំណួរ';
+    : (SUBJ_BY_ID[boardTab]?SUBJ_BY_ID[boardTab].name:'')+' • ប្រកួត '+kn(CHALLENGE_N)+' សំណួរ';
   if(!API_URL){boardMsg('តារាងពិន្ទុមិនទាន់បានភ្ជាប់នៅឡើយទេ។');return;}
   boardMsg('កំពុងផ្ទុក...');
   fetch(boardUrl(boardTab,50)).then(r=>r.json()).then(j=>{
