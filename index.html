@@ -262,6 +262,15 @@ svg.tro{width:1.25em;height:1.38em;vertical-align:-.28em;flex:0 0 auto}
 .pc-brand .bd{font-family:var(--disp);font-size:.8rem;color:var(--green);letter-spacing:-.01em}
 .pc-brand .bs{font-family:var(--mono);font-size:.63rem;color:var(--ink3);font-weight:600}
 
+.automsg{display:flex;align-items:center;justify-content:center;gap:7px;text-align:center;
+  font-size:.83rem;font-weight:700;padding:11px 14px;border-radius:13px;margin-bottom:12px}
+.automsg.ok{background:var(--green-w);color:var(--green)}
+.automsg.wait{background:var(--soft);color:var(--ink2)}
+.automsg.err{background:var(--red-w);color:var(--red)}
+.automsg.skip{background:var(--soft);color:var(--ink3)}
+.spin{animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
 /* ===== SHARE CARD ===== */
 .sharecard{background:#07351F;border-radius:18px;padding:18px;margin-bottom:12px;color:#fff;overflow:hidden;position:relative}
 .sc-top{display:flex;align-items:center;gap:11px;margin-bottom:15px}
@@ -540,6 +549,8 @@ footer a{color:var(--green);text-decoration:none;font-weight:600}
       <button class="btn ghost" onclick="copyShare()"><svg class="ic " viewBox="0 0 24 24" aria-hidden="true"><use href="#i-copy"/></svg> ចម្លងអត្ថបទ</button>
     </div>
 
+    <div class="automsg hide" id="autoMsg"></div>
+
     <div id="submitBox" class="card hide">
       <div class="ttl"><svg class="tro" viewBox="0 0 40 44" aria-hidden="true"><use href="#i-trophy-gold"/></svg> ដាក់ពិន្ទុចូលតារាង</div>
       <div class="hint" style="margin:4px 0 12px">បញ្ចូលឈ្មោះរបស់អ្នក (២–២០ តួអក្សរ)</div>
@@ -787,7 +798,7 @@ function renameMe(){
 function welcome(){
   ask({
     title:'សូមស្វាគមន៍',
-    text:'បញ្ចូលឈ្មោះរបស់អ្នក ដើម្បីតាមដានពិន្ទុ និងឡើងតារាងចំណាត់ថ្នាក់',
+    text:'បញ្ចូលឈ្មោះរបស់អ្នក។ ពិន្ទុប្រកួតរបស់អ្នកនឹងផ្ញើទៅតារាងចំណាត់ថ្នាក់ដោយស្វ័យប្រវត្តិ។',
     input:true, placeholder:'ឈ្មោះរបស់អ្នក...',
     ok:'ចាប់ផ្តើម', cancel:'រំលង', tiny:true,
     onOk:()=>{
@@ -1187,6 +1198,80 @@ function copyShare(){
 }
 
 /* ---------- submission ---------- */
+function sentKey(sid){return 'cq_sent_'+sid;}
+function getSent(sid){
+  try{const v=localStorage.getItem(sentKey(sid)); return v?JSON.parse(v):null;}catch(e){return null;}
+}
+function setSent(sid,score,seconds){
+  try{localStorage.setItem(sentKey(sid),JSON.stringify({score:score,seconds:seconds}));}catch(e){}
+}
+/** only worth sending if it can improve our standing */
+function worthSending(sid,score,seconds){
+  const p=getSent(sid);
+  if(!p) return true;
+  if(score>p.score) return true;
+  return score===p.score && seconds<p.seconds;
+}
+function queuePending(p){
+  try{
+    const all=JSON.parse(localStorage.getItem('cq_pending')||'[]').filter(x=>x.subject!==p.subject);
+    all.push(p);
+    localStorage.setItem('cq_pending',JSON.stringify(all.slice(-5)));
+  }catch(e){}
+}
+function flushPending(){
+  if(!API_URL) return;
+  let all=[];
+  try{all=JSON.parse(localStorage.getItem('cq_pending')||'[]');}catch(e){}
+  if(!all.length) return;
+  try{localStorage.removeItem('cq_pending');}catch(e){}
+  all.forEach(p=>{
+    postScore(p).then(j=>{
+      if(j&&j.ok){ setSent(p.subject,p.score,p.seconds); loadHomeBoard(); }
+      else queuePending(p);
+    }).catch(()=>queuePending(p));
+  });
+}
+function postScore(p){
+  return fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(p)}).then(r=>r.json());
+}
+function amsg(cls,html){
+  const el=$('autoMsg');
+  el.className='automsg '+cls;
+  el.innerHTML=html;
+  el.classList.remove('hide');
+}
+function autoSubmit(){
+  const nm=savedName(), sid=cur.id;
+  const score=correctCount(), total=queue.length, secs=elapsed;
+  if(!API_URL || !nm) return false;
+  if(!worthSending(sid,score,secs)){
+    const p=getSent(sid);
+    amsg('skip', ic('check')+' ពិន្ទុល្អបំផុតរបស់អ្នកនៅតែ '+kn(p.score)+'/'+kn(total)+' ក្នុងតារាង');
+    return true;
+  }
+  amsg('wait', ic('refresh','spin')+' កំពុងផ្ញើពិន្ទុទៅតារាង...');
+  const payload={name:nm,subject:sid,score:score,total:total,seconds:secs};
+  postScore(payload).then(j=>{
+    if(j&&j.ok){
+      setSent(sid,score,secs);
+      lastRank=j.rank;
+      amsg('ok', tro()+' បានផ្ញើរួច · ចំណាត់ថ្នាក់លេខ '+kn(j.rank)+' ក្នុង '+esc(cur.name));
+      buildShare(Math.round(score/total*100),score,total,secs,bestStreak);
+      toast('#'+j.rank,'var(--amber-d)');
+      loadHomeBoard(); loadSubjBoard();
+    }else{
+      queuePending(payload);
+      amsg('err', ic('info')+' ផ្ញើមិនបាន — នឹងព្យាយាមម្តងទៀតពេលក្រោយ');
+    }
+  }).catch(()=>{
+    queuePending(payload);
+    amsg('err', ic('info')+' គ្មានអ៊ីនធឺណិត — ពិន្ទុនឹងផ្ញើពេលក្រោយ');
+  });
+  return true;
+}
+
 function sanitizeName(s){
   return String(s||'').replace(/[<>]/g,'').replace(/[\r\n\t]/g,' ').replace(/\s+/g,' ').trim().slice(0,20);
 }
@@ -1194,7 +1279,9 @@ function smsg(txt,col){const m=$('submitMsg');m.textContent=txt;m.style.color=co
 function skipSubmit(){sndClick();$('submitBox').classList.add('hide');}
 function prepSubmit(){
   const box=$('submitBox');
+  $('autoMsg').classList.add('hide');
   if(mode!=='challenge'){box.classList.add('hide');return;}
+  if(autoSubmit()){box.classList.add('hide');return;}
   box.classList.remove('hide');
   const btn=$('btnSubmit');
   btn.classList.remove('hide'); btn.disabled=false; btn.textContent='ដាក់ពិន្ទុ';
@@ -1210,11 +1297,10 @@ function submitScore(){
   try{localStorage.setItem('cq_name',nm);}catch(e){}
   const btn=$('btnSubmit');
   btn.disabled=true; btn.textContent='កំពុងផ្ញើ...'; smsg('','');
-  fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body:JSON.stringify({name:nm,subject:cur.id,score:correctCount(),total:queue.length,seconds:elapsed})})
-  .then(r=>r.json())
+  postScore({name:nm,subject:cur.id,score:correctCount(),total:queue.length,seconds:elapsed})
   .then(j=>{
     if(j&&j.ok){
+      setSent(cur.id,correctCount(),elapsed);
       smsg('បានរក្សាទុក · ចំណាត់ថ្នាក់លេខ '+kn(j.rank)+' ក្នុង '+cur.name,'var(--green)');
       lastRank=j.rank;
       buildShare(Math.round(correctCount()/queue.length*100),correctCount(),queue.length,elapsed,bestStreak);
@@ -1418,6 +1504,7 @@ paintPlayer();
 renderSubjects();
 loadHomeBoard();
 if(!savedName()) setTimeout(welcome,350);
+flushPending();
 </script>
 </body>
 </html>
