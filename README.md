@@ -15,7 +15,7 @@ exam. Khmer interface, mobile first, works offline, with a shared leaderboard.
 |---|---|---|
 | Cybersecurity | 137 multiple choice + 12 short answer | 8 |
 | Software Engineering | 100 multiple choice | 7 |
-| Advance Programming | 98 multiple choice | 9 |
+| Advance Programming | 98 multiple choice + 28 short answer | 9 |
 
 **335 questions total.** Every question carries a one-line explanation in Khmer,
 shown after you answer in Study mode and in the review list after every round.
@@ -33,7 +33,10 @@ explanation before moving on.
 **ប្រឡង / Exam** — pick a topic and a question count, timed, with a full review
 of everything you got wrong at the end.
 
-**សំណួរខ្លី / Short answer** — flashcards with model answers. Cybersecurity only.
+**សំណួរខ្លី / Short answer** — flashcards with model answers, tapped to reveal.
+Cybersecurity (12) and Advance Programming (28). The Advance Programming set is
+code heavy, so questions that hand you a snippet keep it visible on the card and
+hide only the answer.
 
 ## Progress and rewards
 
