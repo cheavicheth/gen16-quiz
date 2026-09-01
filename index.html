@@ -1029,7 +1029,7 @@ function render(){
   setRing(1);
   $('progBar').style.width=((idx+1)/queue.length*100)+'%';
   $('qText').textContent=q.q;
-  const showKm = (mode==='study') && q.km;
+  const showKm = !!q.km;
   $('qKm').textContent = showKm ? q.km : '';
   $('qKm').classList.toggle('hide', !showKm);
   $('navRow').classList.toggle('hide',isCh);
