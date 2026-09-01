@@ -18,7 +18,7 @@ var MAX_SECONDS    = 7200;
 var MAX_NAME       = 20;
 var CACHE_SECONDS  = 60;
 
-var SUBJECTS = { cyber: 'Cybersecurity', se: 'Software Engineering', ap: 'Advance Programming', net: 'Networking' };
+var SUBJECTS = { cyber: 'Cybersecurity', se: 'Software Engineering', ap: 'Advance Programming', net: 'Advance Networking' };
 var SUBJECT_IDS = ['cyber', 'se', 'ap', 'net'];
 var DEFAULT_SUBJECT = 'cyber';
 

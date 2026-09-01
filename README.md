@@ -16,7 +16,7 @@ exam. Khmer interface, mobile first, works offline, with a shared leaderboard.
 | Cybersecurity | 137 multiple choice + 12 short answer | 8 |
 | Software Engineering | 100 multiple choice + 5 short answer | 7 |
 | Advance Programming | 98 multiple choice + 28 short answer | 9 |
-| Networking | 100 multiple choice + 11 short answer | 6 |
+| Advance Networking | 100 multiple choice + 11 short answer | 6 |
 
 **435 questions total.** Every question carries a one-line explanation in Khmer,
 shown after you answer in Study mode and in the review list after every round.
@@ -37,9 +37,9 @@ of everything you got wrong at the end.
 
 **សំណួរខ្លី / Short answer** — flashcards with model answers, tapped to reveal.
 All four subjects: Cybersecurity (12), Software Engineering (5), Advance
-Programming (28), Networking (11). Questions that hand you a snippet or a diagram
+Programming (28), Advance Networking (11). Questions that hand you a snippet or a diagram
 keep it visible on the card and hide only the answer, so you can attempt it before
-revealing. Networking closes with the full Cisco configuration for the exam's
+revealing. Advance Networking closes with the full Cisco configuration for the exam's
 Packet Tracer topology.
 
 ## Progress and rewards
@@ -112,7 +112,7 @@ follows automatically.
 Some answers and explanations were AI-assisted and **may contain errors**. Always
 verify against your instructor and official course material before an exam.
 
-The Networking question bank ships with its own answers and explanations, which
+The Advance Networking question bank ships with its own answers and explanations, which
 were kept; its Khmer translations and explanations were written for this app.
 
 The Cybersecurity paper ships without an answer key, so every correct answer there
