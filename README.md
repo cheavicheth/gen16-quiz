@@ -13,11 +13,11 @@ exam. Khmer interface, mobile first, works offline, with a shared leaderboard.
 
 | Subject | Questions | Topics |
 |---|---|---|
-| Cybersecurity | 117 multiple choice + 9 short answer | 8 |
+| Cybersecurity | 137 multiple choice + 12 short answer | 8 |
 | Software Engineering | 100 multiple choice | 7 |
-| Advance Programming | 66 multiple choice | 8 |
+| Advance Programming | 98 multiple choice | 9 |
 
-**283 questions total.** Every question carries a one-line explanation in Khmer,
+**335 questions total.** Every question carries a one-line explanation in Khmer,
 shown after you answer in Study mode and in the review list after every round.
 
 ## Modes
@@ -52,7 +52,7 @@ of everything you got wrong at the end.
   | 3,000 | មេជើងឯក |
 
 - **Coverage tracking** — a bar per subject shows how many of its questions you
-  have actually seen, and one on the player card covers all 283.
+  have actually seen, and one on the player card covers all 335.
 - **Personal bests** per subject, with a confetti burst when you beat one.
 
 ## Leaderboard
@@ -77,7 +77,7 @@ person above you.
 
 ## How it works
 
-`index.html` is entirely self contained — all 283 questions, styles, icons and
+`index.html` is entirely self contained — all 335 questions, styles, icons and
 logic in one file. No build step, no dependencies, no framework. Open it from a
 local copy and it runs offline; only the leaderboard and the web fonts need a
 connection.
@@ -104,9 +104,14 @@ follows automatically.
 Some answers and explanations were AI-assisted and **may contain errors**. Always
 verify against your instructor and official course material before an exam.
 
-Two known issues in the source paper: Software Engineering Q9 asks about
-កុំព្យូទ័រ but every option describes a *thread*, and Q19 was ambiguous enough that
-it was reworded to System Testing. Check both with your teacher.
+The Cybersecurity paper ships without an answer key, so every correct answer there
+was worked out rather than transcribed — treat it as a study aid, not an authority.
+Its Q91 was garbled in the handout (`[three main forms of SQL injection...`) and has
+been restored to a readable sentence.
+
+Two known issues in the Software Engineering paper: Q9 asks about កុំព្យូទ័រ but
+every option describes a *thread*, and Q19 was ambiguous enough that it was reworded
+to System Testing. Check both with your teacher.
 
 ## Attribution and takedown
 
