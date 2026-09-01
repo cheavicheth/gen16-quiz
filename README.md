@@ -16,8 +16,9 @@ exam. Khmer interface, mobile first, works offline, with a shared leaderboard.
 | Cybersecurity | 137 multiple choice + 12 short answer | 8 |
 | Software Engineering | 100 multiple choice + 5 short answer | 7 |
 | Advance Programming | 98 multiple choice + 28 short answer | 9 |
+| Networking | 100 multiple choice + 11 short answer | 6 |
 
-**335 questions total.** Every question carries a one-line explanation in Khmer,
+**435 questions total.** Every question carries a one-line explanation in Khmer,
 shown after you answer in Study mode and in the review list after every round.
 
 ## Modes
@@ -28,15 +29,18 @@ immediately and advance on their own. Only Challenge scores reach the leaderboar
 so every run is comparable.
 
 **រៀន / Study** — self paced, no timer. Filter by topic, answer, and read the
-explanation before moving on.
+explanation before moving on. Options are shuffled here too, so you learn the
+answer rather than its position.
 
 **ប្រឡង / Exam** — pick a topic and a question count, timed, with a full review
 of everything you got wrong at the end.
 
 **សំណួរខ្លី / Short answer** — flashcards with model answers, tapped to reveal.
-All three subjects: Cybersecurity (12), Software Engineering (5), Advance
-Programming (28). Questions that hand you a snippet or a diagram keep it visible
-on the card and hide only the answer, so you can attempt it before revealing.
+All four subjects: Cybersecurity (12), Software Engineering (5), Advance
+Programming (28), Networking (11). Questions that hand you a snippet or a diagram
+keep it visible on the card and hide only the answer, so you can attempt it before
+revealing. Networking closes with the full Cisco configuration for the exam's
+Packet Tracer topology.
 
 ## Progress and rewards
 
@@ -55,13 +59,13 @@ on the card and hide only the answer, so you can attempt it before revealing.
   | 3,000 | មេជើងឯក |
 
 - **Coverage tracking** — a bar per subject shows how many of its questions you
-  have actually seen, and one on the player card covers all 335.
+  have actually seen, and one on the player card covers all 435.
 - **Personal bests** per subject, with a confetti burst when you beat one.
 
 ## Leaderboard
 
-Four boards: one per subject, plus a combined **សរុប** ranking that adds your best
-run in each subject together out of 30 and shows how many subjects you have
+Five boards: one per subject, plus a combined **សរុប** ranking that adds your best
+run in each subject together out of 40 and shows how many subjects you have
 attempted. Everything sorts by score first, then by fastest time.
 
 The top three stand on a podium with gold, silver and bronze medals — first place
@@ -71,7 +75,7 @@ person above you.
 ## Design notes
 
 - **No emoji.** Every icon is an inline SVG symbol defined once and referenced with
-  `<use>` — 30 of them. Inline rather than an icon font so the app still works offline.
+  `<use>` — 31 of them. Inline rather than an icon font so the app still works offline.
 - **No CSS gradients.** The only gradients in the file are four SVG ones giving the
   medals and trophy their metallic finish.
 - Light theme throughout. Kantumruy Pro for Khmer, Archivo Black for display,
@@ -80,7 +84,7 @@ person above you.
 
 ## How it works
 
-`index.html` is entirely self contained — all 335 questions, styles, icons and
+`index.html` is entirely self contained — all 435 questions, styles, icons and
 logic in one file. No build step, no dependencies, no framework. Open it from a
 local copy and it runs offline; only the leaderboard and the web fonts need a
 connection.
@@ -91,7 +95,8 @@ submission and 60-second caching on reads.
 
 ## Reusing this for another batch
 
-1. Fork the repo and replace the question data in `index.html` (`Q_CYBER`, `Q_SE`, `Q_AP`).
+1. Fork the repo and replace the question data in `index.html` (`Q_CYBER`, `Q_SE`,
+   `Q_AP`, `Q_NET`).
 2. For your own leaderboard: create a Google Sheet → Extensions → Apps Script →
    paste `Code.gs` → Deploy as a web app with access set to **Anyone** → paste the
    `/exec` URL into `API_URL` near the top of the script block in `index.html`.
@@ -106,6 +111,9 @@ follows automatically.
 
 Some answers and explanations were AI-assisted and **may contain errors**. Always
 verify against your instructor and official course material before an exam.
+
+The Networking question bank ships with its own answers and explanations, which
+were kept; its Khmer translations and explanations were written for this app.
 
 The Cybersecurity paper ships without an answer key, so every correct answer there
 was worked out rather than transcribed — treat it as a study aid, not an authority.

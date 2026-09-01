@@ -1,6 +1,6 @@
 /**
- * Quiz Game — Leaderboard backend (3 subjects)
- * ផ្ទាំងខាងក្រោយសម្រាប់តារាងពិន្ទុ (៣ មុខវិជ្ជា)
+ * Quiz Game — Leaderboard backend (4 subjects)
+ * ផ្ទាំងខាងក្រោយសម្រាប់តារាងពិន្ទុ (៤ មុខវិជ្ជា)
  *
  * HOW TO UPDATE / របៀបធ្វើបច្ចុប្បន្នភាព:
  *   1. Open your Google Sheet → Extensions → Apps Script.
@@ -18,8 +18,8 @@ var MAX_SECONDS    = 7200;
 var MAX_NAME       = 20;
 var CACHE_SECONDS  = 60;
 
-var SUBJECTS = { cyber: 'Cybersecurity', se: 'Software Engineering', ap: 'Advance Programming' };
-var SUBJECT_IDS = ['cyber', 'se', 'ap'];
+var SUBJECTS = { cyber: 'Cybersecurity', se: 'Software Engineering', ap: 'Advance Programming', net: 'Networking' };
+var SUBJECT_IDS = ['cyber', 'se', 'ap', 'net'];
 var DEFAULT_SUBJECT = 'cyber';
 
 function json_(obj) {
@@ -86,7 +86,7 @@ function bestForSubject_(all, subject) {
   return list;
 }
 
-/** Combined board: best per subject summed, out of 3 x EXPECTED_TOTAL. */
+/** Combined board: best per subject summed, out of 4 x EXPECTED_TOTAL. */
 function overall_(all) {
   var per = {};
   for (var s = 0; s < SUBJECT_IDS.length; s++) {
